@@ -2,7 +2,8 @@ from django.db import transaction
 from rest_framework import serializers
 from rest_framework.relations import PrimaryKeyRelatedField
 
-from cinema.models import Genre, Actor, CinemaHall, Movie, MovieSession, Ticket, Order
+from cinema.models import (Genre, Actor, CinemaHall, Movie, MovieSession,
+                           Ticket, Order)
 
 
 class GenreSerializer(serializers.ModelSerializer):
@@ -78,6 +79,7 @@ class MovieSessionListSerializer(MovieSessionSerializer):
         tickets_sold = obj.tickets.count()
         return obj.cinema_hall.capacity - tickets_sold
 
+
 class TicketSeatSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ticket
@@ -111,7 +113,7 @@ class TicketSerializer(serializers.ModelSerializer):
         movie_session = attrs["movie_session"]
         seats_in_row = movie_session.cinema_hall.seats_in_row
         if not(1 <= attrs["seat"] <= seats_in_row):
-            raise serializers.ValidationError(
+            raise serializers.ValidationError (
                 {
                     "seat": f"seat must be between 1 and {seats_in_row}"
                 }
