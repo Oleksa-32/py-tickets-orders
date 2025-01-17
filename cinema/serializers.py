@@ -112,8 +112,8 @@ class TicketSerializer(serializers.ModelSerializer):
     def validate(self, attrs):
         movie_session = attrs["movie_session"]
         seats_in_row = movie_session.cinema_hall.seats_in_row
-        if not(1 <= attrs["seat"] <= seats_in_row):
-            raise serializers.ValidationError (
+        if not (1 <= attrs["seat"] <= seats_in_row):
+            raise serializers.ValidationError(
                 {
                     "seat": f"seat must be between 1 and {seats_in_row}"
                 }
